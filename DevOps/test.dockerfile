@@ -1,3 +1,3 @@
-FROM dockerfile_3
+FROM jellyfin/jellyfin
 
 RUN dotnet test /jellyfin

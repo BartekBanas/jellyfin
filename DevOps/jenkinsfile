@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    environment {
+        MAJOR_VERSION = "1"
+        MINOR_VERSION = "1"
+        BUILD_VERSION = sh(returnStdout: true, script: 'echo ${BUILD_NUMBER}').trim()
+        VERSION = "${MAJOR_VERSION}.${MINOR_VERSION}.${BUILD_VERSION}"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo 'building...'
+                sh 'DOCKER_TLS_VERIFY=0 docker compose -f devops/docker-compose.yml build --no-cache python-telegram-bot > devops/logs-build.txt'
+            }
+            post {
+                always{
+                    archiveArtifacts(artifacts: 'devops/*.txt', fingerprint: true, followSymlinks: false)
+                }
+                success {
+                    echo '   success'
+                }
+                failure {
+                    echo '   failure'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'testing...'
+                sh 'DOCKER_TLS_VERIFY=0 docker compose -f devops/docker-compose.yml build python-telegram-bot-tests > devops/logs-test.txt'
+            }
+            post {
+                always{
+                    archiveArtifacts(artifacts: 'devops/*.txt', fingerprint: true, followSymlinks: false)
+                }
+                success {
+                    echo '   success'
+                }
+                failure {
+                    echo '   failure'
+                }
+            }
+        }
+    }
+}

@@ -5,4 +5,4 @@ RUN git clone https://github.com/BartekBanas/jellyfin
 
 WORKDIR /jellyfin
 
-RUN dotnet test
+RUN dotnet build
