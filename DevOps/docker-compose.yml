@@ -1,21 +1,19 @@
- version: "3.9"
- services:
-   jellyfin/jellyfin:
-     image: jellyfin/jellyfin:latest
-     volumes:
-       - ./logs:/logs
-     build: 
-       context: .
-       dockerfile: build.Dockerfile
-   jellyfin/jellyfin-tests:
-     image: jellyfin/jellyfin-tests:latest
-     volumes:
-       - ./logs:/logs
-     build:
-       context: .
-       dockerfile: test.Dockerfile
-     depends_on:
-       - jellyfin/jellyfin
+version: "3.9"
+services:
+  jellyfin:
+    build:
+      context: .
+      dockerfile: build.dockerfile
+  jellyfin-tests:
+    build:
+      context: .
+      dockerfile: test.dockerfile
+    depends_on:
+      - jellyfin
+    command: ["dotnet", "test", "/jellyfin"]
+    volumes:
+      - ./logs:/logs
+
 #    jellyfin/jellyfin-deploy:
 #      image: jellyfin/jellyfin-deploy:latest
 #      build:
