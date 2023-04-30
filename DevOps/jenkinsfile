@@ -11,13 +11,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'building...'
-                sh 'DOCKER_TLS_VERIFY=0 docker compose -f devops/docker-compose.yml build --no-cache jellyfin > devops/logs-build.txt'
-                archiveArtifacts artifacts: 'devops/logs-build.txt', fingerprint: true
+                sh 'DOCKER_TLS_VERIFY=0 docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin > DevOps/logs-build.txt'
+                archiveArtifacts artifacts: 'DevOps/logs-build.txt', fingerprint: true
             }
 
             post {
                 always{
-                    archiveArtifacts(artifacts: 'devops/*.txt', fingerprint: true, followSymlinks: false)
+                    archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
                 }
                 success {
                     echo '   success'
@@ -30,11 +30,11 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'testing...'
-                sh 'DOCKER_TLS_VERIFY=0 docker compose -f devops/docker-compose.yml build jellyfin-tests > devops/logs-test.txt'
+                sh 'DOCKER_TLS_VERIFY=0 docker compose -f DevOps/docker-compose.yml build jellyfin-tests > DevOps/logs-test.txt'
             }
             post {
                 always{
-                    archiveArtifacts(artifacts: 'devops/*.txt', fingerprint: true, followSymlinks: false)
+                    archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
                 }
                 success {
                     echo '   success'
