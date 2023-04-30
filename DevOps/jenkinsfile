@@ -10,35 +10,37 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
-                sh 'docker-compose -f devops/docker-compose.yml build --no-cache jellyfin > devops/logs-build.txt'
+                echo 'building...'
+                sh 'DOCKER_TLS_VERIFY=0 docker compose -f devops/docker-compose.yml build --no-cache jellyfin > devops/logs-build.txt'
+                archiveArtifacts artifacts: 'devops/logs-build.txt', fingerprint: true
             }
+
             post {
                 always{
                     archiveArtifacts(artifacts: 'devops/*.txt', fingerprint: true, followSymlinks: false)
                 }
                 success {
-                    echo '   Success'
+                    echo '   success'
                 }
                 failure {
-                    echo '   Failure'
+                    echo '   failure'
                 }
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
-                sh 'docker-compose -f devops/docker-compose.yml up jellyfin-tests > devops/logs-test.txt'
+                echo 'testing...'
+                sh 'DOCKER_TLS_VERIFY=0 docker compose -f devops/docker-compose.yml build jellyfin-tests > devops/logs-test.txt'
             }
             post {
                 always{
                     archiveArtifacts(artifacts: 'devops/*.txt', fingerprint: true, followSymlinks: false)
                 }
                 success {
-                    echo '   Success'
+                    echo '   success'
                 }
                 failure {
-                    echo '   Failure'
+                    echo '   failure'
                 }
             }
         }
