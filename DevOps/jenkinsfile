@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+    docker {
+        image 'ubuntu:latest'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
+}
     environment {
         MAJOR_VERSION = "1"
         MINOR_VERSION = "1"
