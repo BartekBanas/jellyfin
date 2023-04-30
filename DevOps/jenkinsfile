@@ -1,9 +1,11 @@
 pipeline {
     agent {
         docker {
-            image 'node:12-alpine'
-            args '-p 3000:3000'
+            label 'jenkins-agent'
+            image 'docker:latest'
+            args '--group-add $(getent group docker | cut -d: -f3)'
         }
+    }
     environment {
         MAJOR_VERSION = "1"
         MINOR_VERSION = "1"
