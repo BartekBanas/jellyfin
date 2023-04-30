@@ -8,8 +8,6 @@ services:
     build:
       context: .
       dockerfile: test.dockerfile
-    depends_on:
-      - jellyfin
     command: ["dotnet", "test", "/jellyfin"]
     volumes:
       - ./logs:/logs
