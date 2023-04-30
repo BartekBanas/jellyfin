@@ -5,7 +5,7 @@ pipeline {
         MINOR_VERSION = "1"
         BUILD_VERSION = sh(returnStdout: true, script: 'echo ${BUILD_NUMBER}').trim()
         VERSION = "${MAJOR_VERSION}.${MINOR_VERSION}.${BUILD_VERSION}"
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-token')
     }
     stages {
         stage('Build') {
