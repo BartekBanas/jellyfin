@@ -45,7 +45,7 @@ pipeline {
                 }
             }
         }
-        sstage('Fun') {
+        stage('Fun') {
             steps {
                 echo 'building...'
                 sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin > DevOps/logs-build.txt'
