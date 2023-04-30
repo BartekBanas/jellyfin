@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'building...'
-                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin > DevOps/logs-build.txt'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-tests > DevOps/logs-build.txt'
                 archiveArtifacts artifacts: 'DevOps/logs-build.txt', fingerprint: true
             }
 
@@ -31,7 +31,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'testing...'
-                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build jellyfin-tests > DevOps/logs-test.txt'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build jellyfin > DevOps/logs-test.txt'
             }
             post {
                 always{
