@@ -1,9 +1,9 @@
 pipeline {
     agent {
-        node {
-            label 'jenkins-agent'
+        docker {
+            image 'node:12-alpine'
+            args '-p 3000:3000'
         }
-    }
     environment {
         MAJOR_VERSION = "1"
         MINOR_VERSION = "1"
