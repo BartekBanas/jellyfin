@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            label 'jenkins-agent'
-            image 'docker:latest'
-            args '--group-add $(getent group docker | cut -d: -f3)'
-        }
-    }
+    agent any
     environment {
         MAJOR_VERSION = "1"
         MINOR_VERSION = "1"
