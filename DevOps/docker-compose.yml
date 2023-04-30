@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: build.dockerfile
+
   jellyfin-tests:
     build:
       context: .
@@ -14,12 +15,18 @@ services:
     volumes:
       - ./logs:/logs
 
-#    jellyfin/jellyfin-deploy:
-#      image: jellyfin/jellyfin-deploy:latest
-#      build:
-#        context: .
-#        dockerfile: deploy.Dockerfile
-#      depends_on:
-#        - jellyfin/jellyfin
-#  volumes:
-#    logs:
+  jellyfin-deploy:
+    image: jellyfin/jellyfin:latest
+    build:
+      context: .
+      dockerfile: deploy.dockerfile
+    depends_on:
+      - jellyfin
+
+  jellyfin-publish:
+    image: jellyfin/jellyfin:latest
+    build:
+      context: .
+      dockerfile: publish.dockerfile
+    depends_on:
+      - jellyfin-deploy

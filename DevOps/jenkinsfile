@@ -47,5 +47,43 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                echo 'deploying...'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-deploy > DevOps/logs-deploy.txt'
+                archiveArtifacts artifacts: 'DevOps/logs-deploy.txt', fingerprint: true
+            }
+
+            post {
+                always{
+                    archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
+                }
+                success {
+                    echo '   success'
+                }
+                failure {
+                    echo '   failure'
+                }
+            }
+        }
+        stage('Publish') {
+            steps {
+                echo 'publishing...'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-publish > DevOps/logs-publish.txt'
+                archiveArtifacts artifacts: 'DevOps/logs-publish.txt', fingerprint: true
+            }
+
+            post {
+                always{
+                    archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
+                }
+                success {
+                    echo '   success'
+                }
+                failure {
+                    echo '   failure'
+                }
+            }
+        }
     }
 }
