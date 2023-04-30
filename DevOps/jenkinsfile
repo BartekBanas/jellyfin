@@ -1,10 +1,9 @@
 pipeline {
     agent {
-    docker {
-        image 'ubuntu:latest'
-        args '-v /var/run/docker.sock:/var/run/docker.sock'
+        node {
+            label 'jenkins-agent'
+        }
     }
-}
     environment {
         MAJOR_VERSION = "1"
         MINOR_VERSION = "1"
