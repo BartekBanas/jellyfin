@@ -15,8 +15,8 @@ services:
     volumes:
       - ./logs:/logs
 
-  jellyfin-deploy:
-    image: jellyfin-deploy:latest
+  jellyfin-publish:
+    image: jellyfin-publish:latest
     build:
       context: .
       dockerfile: trash.Dockerfile
