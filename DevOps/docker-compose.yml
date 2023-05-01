@@ -18,10 +18,10 @@ services:
   jellyfin-deploy:
     image: jellyfin/jellyfin:latest
     build:
-      # context: .
-      # dockerfile: trash.Dockerfile
-      context: ../
-      dockerfile: build.Dockerfile
+      context: .
+      dockerfile: trash.Dockerfile
+      # context: ../
+      # dockerfile: build.Dockerfile
     # depends_on:
     #   - jellyfin
 
