@@ -50,7 +50,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'deploying...'
-                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-deploy'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-deploy:latest > DevOps/logs-deploy.txt'
                 sh "DOCKER_TLS_VERIFY= docker tag jellyfin-deploy illuminaticat/jellyfin:${VERSION}"
                 sh 'DOCKER_TLS_VERIFY= echo $DOCKERHUB_CREDENTIALS_PSW | DOCKER_TLS_VERIFY= docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh "DOCKER_TLS_VERIFY= docker push illuminaticat/jellyfin:${VERSION}"
