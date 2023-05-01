@@ -54,7 +54,7 @@ pipeline {
                 sh "DOCKER_TLS_VERIFY=0 docker tag jellyfin-deploy illuminaticat/jellyfin:${VERSION} >> devops/logs-deploy.txt"
                 // sh "echo $DOCKERHUB_TOKEN | docker login -u illuminaticat --password-stdin"
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin >> devops/logs-deploy.txt'
-                sh "DOCKER_TLS_VERIFY=0 docker push illuminaticat/jellyfin:${VERSION} >> devops/logs-deploy.txt"
+                // sh "DOCKER_TLS_VERIFY=0 docker push illuminaticat/jellyfin:${VERSION} >> devops/logs-deploy.txt"
                 
             }
 
