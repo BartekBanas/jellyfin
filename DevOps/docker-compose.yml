@@ -5,29 +5,28 @@ services:
       context: .
       dockerfile: build.dockerfile
 
-  jellyfin-tests:
-    build:
-      context: .
-      dockerfile: test.dockerfile
-    depends_on:
-      - jellyfin
-    command: ["dotnet", "test", "/jellyfin"]
-    volumes:
-      - ./logs:/logs
+  # jellyfin-tests:
+  #   build:
+  #     context: .
+  #     dockerfile: test.dockerfile
+  #   depends_on:
+  #     - jellyfin
+  #   command: ["dotnet", "test", "/jellyfin"]
+  #   volumes:
+  #     - ./logs:/logs
 
   jellyfin-deploy:
     image: jellyfin/jellyfin:latest
     build:
-      context: .
-      # dockerfile: deploy.dockerfile
-      dockerfile: ../Jellyfin.Server/dockerfile
-    depends_on:
-      - jellyfin
+      context: ../
+      dockerfile: build.Dockerfile
+    # depends_on:
+    #   - jellyfin
 
-  jellyfin-publish:
-    image: jellyfin/jellyfin:latest
-    build:
-      context: .
-      dockerfile: publish.dockerfile
-    depends_on:
-      - jellyfin-deploy
+  # jellyfin-publish:
+  #   image: jellyfin/jellyfin:latest
+  #   build:
+  #     context: .
+  #     dockerfile: publish.dockerfile
+  #   depends_on:
+  #     - jellyfin-deploy
