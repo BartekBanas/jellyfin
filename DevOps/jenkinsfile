@@ -51,11 +51,11 @@ pipeline {
             steps {
                 echo 'deploying...'
                 sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-deploy > DevOps/logs-deploy.txt'
-                withCredentials([usernameColonPassword(credentialsId: 'dockerhub-token', variable: 'dockerhub-token')])  {
-                    // sh "echo $DOCKERHUB_TOKEN | docker login -u illuminaticat --password-stdin"
-                    sh "docker tag jellyfin-deploy illuminaticat/jellyfin:${VERSION}"
-                    sh "docker push illuminaticat/jellyfin:${VERSION}"
-                }
+                // withCredentials([usernameColonPassword(credentialsId: 'dockerhub-token', variable: 'dockerhub-token')])  {
+                //     // sh "echo $DOCKERHUB_TOKEN | docker login -u illuminaticat --password-stdin"
+                //     sh "docker tag jellyfin-deploy illuminaticat/jellyfin:${VERSION}"
+                //     sh "docker push illuminaticat/jellyfin:${VERSION}"
+                // }
             }
 
             post {
