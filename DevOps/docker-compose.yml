@@ -16,7 +16,7 @@ services:
       - ./logs:/logs
 
   jellyfin-deploy:
-    image: jellyfin/jellyfin:latest
+    image: jellyfin-deploy:latest
     build:
       context: .
       dockerfile: trash.Dockerfile
