@@ -66,24 +66,24 @@ pipeline {
                 }
             }
         }
-        stage('Publish') {
-            steps {
-                echo 'publishing...'
-                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-publish > DevOps/logs-publish.txt'
-                archiveArtifacts artifacts: 'DevOps/logs-publish.txt', fingerprint: true
-            }
+        // stage('Publish') {
+        //     steps {
+        //         echo 'publishing...'
+        //         sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-publish > DevOps/logs-publish.txt'
+        //         archiveArtifacts artifacts: 'DevOps/logs-publish.txt', fingerprint: true
+        //     }
 
-            post {
-                always{
-                    archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
-                }
-                success {
-                    echo '   success'
-                }
-                failure {
-                    echo '   failure'
-                }
-            }
-        }
+        //     post {
+        //         always{
+        //             archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
+        //         }
+        //         success {
+        //             echo '   success'
+        //         }
+        //         failure {
+        //             echo '   failure'
+        //         }
+        //     }
+        // }
     }
 }
