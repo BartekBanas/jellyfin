@@ -54,7 +54,7 @@ pipeline {
                 sh "docker tag jellyfin-deploy illuminaticat/jellyfin:${VERSION} >> devops/logs-deploy.txt"
                 withCredentials([usernameColonPassword(credentialsId: 'dockerhub-token', variable: 'dockerhub-token')])  {
                     // sh "echo $DOCKERHUB_TOKEN | docker login -u illuminaticat --password-stdin"
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin >> devops/logs-deploy.txt'
+                    sh 'echo $DOCKERHUB_CREDENTIALS | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin >> devops/logs-deploy.txt'
                     sh "docker push illuminaticat/jellyfin:${VERSION} >> devops/logs-deploy.txt"
                 }
             }
