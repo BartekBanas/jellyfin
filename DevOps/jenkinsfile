@@ -71,7 +71,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'deploying...'
-                sh 'docker-compose -f DevOps/docker-compose.yml up -d jellyfin-deploy'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml up -d jellyfin-deploy'
                 archiveArtifacts artifacts: 'DevOps/logs-publish.txt', fingerprint: true
             }
 
