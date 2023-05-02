@@ -47,27 +47,27 @@ pipeline {
         //         }
         //     }
         // }
-        // stage('Publish') {
-        //     steps {
-        //         echo 'publishing...'
-        //         sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-publish > DevOps/logs-publish.txt'
-        //         sh "DOCKER_TLS_VERIFY= docker tag jellyfin-publish illuminaticat/jellyfin:${VERSION}"
-        //         sh 'DOCKER_TLS_VERIFY= echo $DOCKERHUB_CREDENTIALS_PSW | DOCKER_TLS_VERIFY= docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-        //         sh "DOCKER_TLS_VERIFY= docker push illuminaticat/jellyfin:${VERSION}"
-        //     }
+        stage('Publish') {
+            steps {
+                echo 'publishing...'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-publish > DevOps/logs-publish.txt'
+                sh "DOCKER_TLS_VERIFY= docker tag jellyfin-publish illuminaticat/jellyfin:${VERSION}"
+                sh 'DOCKER_TLS_VERIFY= echo $DOCKERHUB_CREDENTIALS_PSW | DOCKER_TLS_VERIFY= docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh "DOCKER_TLS_VERIFY= docker push illuminaticat/jellyfin:${VERSION}"
+            }
 
-        //     post {
-        //         always{
-        //             archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
-        //         }
-        //         success {
-        //             echo '   success'
-        //         }
-        //         failure {
-        //             echo '   failure'
-        //         }
-        //     }
-        // }
+            post {
+                always{
+                    archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
+                }
+                success {
+                    echo '   success'
+                }
+                failure {
+                    echo '   failure'
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'deploying...'
