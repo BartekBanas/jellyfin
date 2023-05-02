@@ -9,44 +9,44 @@ pipeline {
         DOCKER_HOST = "tcp://docker:2375"
     }
     stages {
-        // stage('Build') {
-        //     steps {
-        //         echo 'building...'
-        //         sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin > DevOps/logs-build.txt'
-        //         archiveArtifacts artifacts: 'DevOps/logs-build.txt', fingerprint: true
-        //     }
+        stage('Build') {
+            steps {
+                echo 'building...'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin > DevOps/logs-build.txt'
+                archiveArtifacts artifacts: 'DevOps/logs-build.txt', fingerprint: true
+            }
 
-        //     post {
-        //         always{
-        //             archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
-        //         }
-        //         success {
-        //             echo '   success'
-        //         }
-        //         failure {
-        //             echo '   failure'
-        //         }
-        //     }
-        // }
-        // stage('Test') {
-        //     steps {
-        //         echo 'testing...'
-        //         sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-tests > DevOps/logs-test.txt'
-        //         archiveArtifacts artifacts: 'DevOps/logs-test.txt', fingerprint: true
-        //     }
+            post {
+                always{
+                    archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
+                }
+                success {
+                    echo '   success'
+                }
+                failure {
+                    echo '   failure'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'testing...'
+                sh 'DOCKER_TLS_VERIFY= docker compose -f DevOps/docker-compose.yml build --no-cache jellyfin-tests > DevOps/logs-test.txt'
+                archiveArtifacts artifacts: 'DevOps/logs-test.txt', fingerprint: true
+            }
 
-        //     post {
-        //         always{
-        //             archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
-        //         }
-        //         success {
-        //             echo '   success'
-        //         }
-        //         failure {
-        //             echo '   failure'
-        //         }
-        //     }
-        // }
+            post {
+                always{
+                    archiveArtifacts(artifacts: 'DevOps/*.txt', fingerprint: true, followSymlinks: false)
+                }
+                success {
+                    echo '   success'
+                }
+                failure {
+                    echo '   failure'
+                }
+            }
+        }
         stage('Publish') {
             steps {
                 echo 'publishing...'
