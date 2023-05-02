@@ -20,10 +20,11 @@ services:
     build:
       context: .
       dockerfile: trash.Dockerfile
-      # context: ../
-      # dockerfile: build.Dockerfile
-    # depends_on:
-    #   - jellyfin
+
+  jellyfin-deploy:
+      image: illuminaticat/jellyfin
+      ports:
+        - "8096:8096"
 
   # jellyfin-publish:
   #   image: jellyfin/jellyfin:latest
