@@ -15,11 +15,11 @@ services:
     volumes:
       - ./logs:/logs
 
-    jellyfin-publish:
-      image: jellyfin-publish:latest
-      build:
-        context: ../
-        dockerfile: build.Dockerfile
+  jellyfin-publish:
+    image: jellyfin-publish:latest
+    build:
+      context: ../
+      dockerfile: build.Dockerfile
       
   jellyfin-deploy:
       image: illuminaticat/jellyfin:1.1.115
