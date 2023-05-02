@@ -22,7 +22,7 @@ services:
       dockerfile: trash.Dockerfile
 
   jellyfin-deploy:
-      image: illuminaticat/jellyfin:latest
+      image: illuminaticat/jellyfin:1.1.115
       ports:
         - "8096:8096"
 
