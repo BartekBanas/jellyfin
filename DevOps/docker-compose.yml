@@ -19,7 +19,7 @@ services:
     image: jellyfin-publish:latest
     build:
       context: ../
-      dockerfile: build.Dockerfile
+      dockerfile: Dockerfile
       
   jellyfin-deploy:
       image: illuminaticat/jellyfin:1.1.115
