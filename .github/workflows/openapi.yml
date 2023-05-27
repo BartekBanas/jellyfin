@@ -19,7 +19,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup .NET
-        uses: actions/setup-dotnet@607fce577a46308457984d59e4954e075820f10a # v3.0.3
+        uses: actions/setup-dotnet@aa983c550dfda0d1722b6ac6aed55724ffacc6d3 # v3.1.0
         with:
           dotnet-version: '7.0.x'
       - name: Generate openapi.json
@@ -51,7 +51,7 @@ jobs:
           ANCESTOR_REF=$(git merge-base upstream/${{ github.base_ref }} origin/${{ github.head_ref }})
           git checkout --progress --force $ANCESTOR_REF
       - name: Setup .NET
-        uses: actions/setup-dotnet@607fce577a46308457984d59e4954e075820f10a # v3.0.3
+        uses: actions/setup-dotnet@aa983c550dfda0d1722b6ac6aed55724ffacc6d3 # v3.1.0
         with:
           dotnet-version: '7.0.x'
       - name: Generate openapi.json
@@ -103,14 +103,14 @@ jobs:
           body="${body//$'\r'/'%0D'}"
           echo ::set-output name=body::$body
       - name: Find difference comment
-        uses: peter-evans/find-comment@034abe94d3191f9c89d870519735beae326f2bdb # v2.3.0
+        uses: peter-evans/find-comment@a54c31d7fa095754bfef525c0c8e5e5674c4b4b1 # v2.4.0
         id: find-comment
         with:
           issue-number: ${{ github.event.pull_request.number }}
           direction: last
           body-includes: openapi-diff-workflow-comment
       - name: Reply or edit difference comment (changed)
-        uses: peter-evans/create-or-update-comment@3383acd359705b10cb1eeef05c0e88c056ea4666 # v3.0.0
+        uses: peter-evans/create-or-update-comment@ca08ebd5dc95aa0cd97021e9708fcd6b87138c9b # v3.0.1
         if: ${{ steps.read-diff.outputs.body != '' }}
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -125,7 +125,7 @@ jobs:
 
             </details>
       - name: Edit difference comment (unchanged)
-        uses: peter-evans/create-or-update-comment@3383acd359705b10cb1eeef05c0e88c056ea4666 # v3.0.0
+        uses: peter-evans/create-or-update-comment@ca08ebd5dc95aa0cd97021e9708fcd6b87138c9b # v3.0.1
         if: ${{ steps.read-diff.outputs.body == '' && steps.find-comment.outputs.comment-id != '' }}
         with:
           issue-number: ${{ github.event.pull_request.number }}
